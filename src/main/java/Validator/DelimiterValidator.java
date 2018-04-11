@@ -9,10 +9,9 @@ import java.util.stream.Stream;
 
 public class DelimiterValidator {
 
-    public void validateDelimiterInHeader(Optional<List<String>> delimiters) throws InvalidDelimiterFormatException {
-        if (delimiters.isPresent()){
-            List<String> delimiterList = delimiters.get();
-            for (String delimiter: delimiterList){
+    public void validateDelimiterInHeader(List<String> delimiters) throws InvalidDelimiterFormatException {
+        if (delimiters != null){
+            for (String delimiter: delimiters){
                 validateSingleDelimiter(delimiter);
             }
         }

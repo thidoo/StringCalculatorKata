@@ -21,28 +21,28 @@ public class DelimiterValidatorTest {
 
     @Test
     public void validHeaderTest_singleCharacterDelimiter() throws InvalidDelimiterFormatException {
-        delimiterValidator.validateDelimiterInHeader(Optional.of(Arrays.asList(new String[]{"*"})));
+        delimiterValidator.validateDelimiterInHeader(Arrays.asList(new String[]{"*"}));
     }
 
     @Test
     public void validHeaderTest_MultipleDelimiters() throws InvalidDelimiterFormatException {
-        delimiterValidator.validateDelimiterInHeader(Optional.of(Arrays.asList(new String[]{"#","&"})));
+        delimiterValidator.validateDelimiterInHeader(Arrays.asList(new String[]{"#","&"}));
     }
 
     @Test
     public void validHeaderTest_DelimiterOfAnyLength() throws InvalidDelimiterFormatException {
-        delimiterValidator.validateDelimiterInHeader(Optional.of(Arrays.asList(new String[]{"***"})));
+        delimiterValidator.validateDelimiterInHeader(Arrays.asList(new String[]{"***"}));
     }
 
     @Test
     public void validHeaderTest_NumberDelimiter() throws InvalidDelimiterFormatException {
-        delimiterValidator.validateDelimiterInHeader(Optional.of(Arrays.asList(new String[]{"*1*"})));
+        delimiterValidator.validateDelimiterInHeader(Arrays.asList(new String[]{"*1*"}));
     }
 
     @Test(expected = InvalidDelimiterFormatException.class)
     public void inValidHeaderTest_NoDelimiterInsideSquareBrackets() throws InvalidDelimiterFormatException {
         DelimiterValidator delimiterValidator = new DelimiterValidator();
-        delimiterValidator.validateDelimiterInHeader(Optional.of(Arrays.asList(new String[]{"*",""})));
+        delimiterValidator.validateDelimiterInHeader(Arrays.asList(new String[]{"*",""}));
     }
 
     @Test

@@ -38,7 +38,7 @@ public class NumberExtractor {
     private List<Integer> parseNonEmptyString(String inputString) throws InvalidDelimiterFormatException {
         separateCustomDelimiterPart_FromNumberPart(inputString);
 
-        Optional<List<String>> delimiters = delimiterFetcher.parse(customDelimiterString);
+        List<String> delimiters = delimiterFetcher.fetch(customDelimiterString);
         delimiterValidator.validateDelimiterInHeader(delimiters);
 
         return extractNumbers(numberString, delimiters);
@@ -50,13 +50,13 @@ public class NumberExtractor {
         numberString = customStringSplitter.getNumberString();
     }
 
-    private List<Integer> extractNumbers(String numberString, Optional<List<String>> delimiters) throws InvalidDelimiterFormatException {
+    private List<Integer> extractNumbers(String numberString, List<String> delimiters) throws InvalidDelimiterFormatException {
         String[] parsedStringArray = parseToStringArray(numberString, delimiters);
         delimiterValidator.validateDelimiterInBody(parsedStringArray);
         return convertToIntegerList(parsedStringArray);
     }
 
-    private String[] parseToStringArray(String inputString, Optional<List<String>> delimiters) {
+    private String[] parseToStringArray(String inputString, List<String> delimiters) {
         String splitPattern = getSplitRegexPattern(delimiters);
         return inputString.split(splitPattern);
     }
@@ -71,8 +71,8 @@ public class NumberExtractor {
         }
     }
 
-    private String getSplitRegexPattern(Optional<List<String>> delimiters) {
-        if (!delimiters.isPresent()) {
+    private String getSplitRegexPattern(List<String> delimiters) {
+        if (delimiters == null) {
             return getDefaultPattern();
         }
         return getPatternForNonDefaultDelimiters(delimiters);
@@ -83,11 +83,11 @@ public class NumberExtractor {
                 StringCalculator.getDefaultDelimiter());
     }
 
-    private String getPatternForNonDefaultDelimiters(Optional<List<String>> delimiters) {
+    private String getPatternForNonDefaultDelimiters(List<String> delimiters) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(StringCalculator.getAlternateDelimiter());
 
-        delimiters.get().forEach(delimiter -> {
+        delimiters.forEach(delimiter -> {
             stringBuilder.append("|");
             stringBuilder.append(Pattern.quote(delimiter));
         });

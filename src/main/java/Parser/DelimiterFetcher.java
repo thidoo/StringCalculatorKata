@@ -12,9 +12,9 @@ public class DelimiterFetcher {
     // surrounded by square brackets []
     private final static String DELIMITER_FORMAT_PATTERN = "\\[(.*?)\\]";
 
-    public Optional<List<String>> parse(String delimiterString) {
+    public List<String> fetch(String delimiterString) {
         if (delimiterString.isEmpty()) {
-            return Optional.empty();
+            return null;
         }
 
         if (!delimiterString.startsWith("[")) {
@@ -25,25 +25,30 @@ public class DelimiterFetcher {
 
     }
 
-    private Optional<List<String>> addSingleDelimiter(String delimiter) {
+    private List<String> addSingleDelimiter(String delimiter) {
         List<String> delimiters = new ArrayList<>();
         delimiters.add(delimiter);
-        return Optional.of(delimiters);
+        return delimiters;
     }
 
-    private Optional<List<String>> extractDelimitersFromSquareBrackets(String headerContent) {
+    private List<String> extractDelimitersFromSquareBrackets(String headerContent) {
         Pattern pattern = Pattern.compile(DELIMITER_FORMAT_PATTERN);
         Matcher matcher = pattern.matcher(headerContent);
         return findMatches(matcher);
     }
 
-    private Optional<List<String>> findMatches(Matcher matcher){
+    private List<String> findMatches(Matcher matcher){
         List<String> delimiters = new ArrayList<>();
 
         while (matcher.find()) {
             String delimiter = matcher.group(1);
             delimiters.add(delimiter);
         }
-        return Optional.of(delimiters);
+
+        if (delimiters.isEmpty()){
+            return null;
+        }
+
+        return delimiters;
     }
 }
