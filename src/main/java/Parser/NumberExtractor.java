@@ -30,12 +30,12 @@ public class NumberExtractor {
         this.delimiterValidator = delimiterValidator;
     }
 
-    public Optional<List<Integer>> parse(String inputString) throws InvalidDelimiterFormatException {
-        if (inputString.isEmpty()) { return Optional.empty(); }
+    public List<Integer> extract(String inputString) throws InvalidDelimiterFormatException {
+        if (inputString.isEmpty()) { return null; }
         return parseNonEmptyString(inputString);
     }
 
-    private Optional<List<Integer>> parseNonEmptyString(String inputString) throws InvalidDelimiterFormatException {
+    private List<Integer> parseNonEmptyString(String inputString) throws InvalidDelimiterFormatException {
         separateCustomDelimiterPart_FromNumberPart(inputString);
 
         Optional<List<String>> delimiters = delimiterFetcher.parse(customDelimiterString);
@@ -50,10 +50,10 @@ public class NumberExtractor {
         numberString = customStringSplitter.getNumberString();
     }
 
-    private Optional<List<Integer>> extractNumbers(String numberString, Optional<List<String>> delimiters) throws InvalidDelimiterFormatException {
+    private List<Integer> extractNumbers(String numberString, Optional<List<String>> delimiters) throws InvalidDelimiterFormatException {
         String[] parsedStringArray = parseToStringArray(numberString, delimiters);
         delimiterValidator.validateDelimiterInBody(parsedStringArray);
-        return Optional.ofNullable(convertToIntegerList(parsedStringArray));
+        return convertToIntegerList(parsedStringArray);
     }
 
     private String[] parseToStringArray(String inputString, Optional<List<String>> delimiters) {

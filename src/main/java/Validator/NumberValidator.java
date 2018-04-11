@@ -6,10 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class NumberValidator {
-    public void validate(Optional<List<Integer>> numbers) throws NegativesNotAllowedException {
-        if (numbers.isPresent()){
-            List<Integer> numberList = numbers.get();
-            checkForNegatives(numberList);
+    public void validate(List<Integer> numbers) throws NegativesNotAllowedException {
+        if (numbers != null){
+            checkForNegatives(numbers);
         }
     }
 

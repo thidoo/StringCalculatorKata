@@ -6,7 +6,6 @@ import Parser.NumberExtractor;
 import Validator.NumberValidator;
 
 import java.util.List;
-import java.util.Optional;
 
 public class StringCalculator {
 
@@ -27,7 +26,7 @@ public class StringCalculator {
     public int process(String inputString) throws InvalidDelimiterFormatException,
                                                     NegativesNotAllowedException {
 
-        Optional<List<Integer>> numbers = numberExtractor.parse(inputString);
+        List<Integer> numbers = numberExtractor.extract(inputString);
         numberValidator.validate(numbers);
 
         return sumCalculator.sum(numbers);
